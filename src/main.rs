@@ -95,8 +95,8 @@ pub fn monitor_internet_connectivity(thread_stop: Arc<CancellationToken>, is_int
 use ping::ping;
 
 fn check_internet_connectivity(timeout: Duration) -> Result<bool, Box<dyn std::error::Error>> {
-    // IP address "54.243.56.11" is my personal Amazon AWS EC2 server.
-    let host: std::net::IpAddr = std::net::Ipv4Addr::new(54, 243, 56, 11).into();
+    // Google primary DNS server: 8.8.8.8
+    let host: std::net::IpAddr = std::net::Ipv4Addr::new(8, 8, 8, 8).into();
     match ping(host, Some(timeout), None, None, None, None) {
         Ok(_) => Ok(true),
         Err(_) => Ok(false),

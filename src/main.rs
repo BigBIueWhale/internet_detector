@@ -82,7 +82,7 @@ pub struct BooleanPredicate
 pub fn monitor_internet_connectivity(thread_stop: Arc<CancellationToken>, is_internet_connected: Arc<BooleanPredicate>) -> Result<(), Box<dyn std::error::Error>>
 {
     while !thread_stop.is_canceled() {
-        if check_internet_connectivity(Duration::from_secs(1))? {
+        if check_internet_connectivity(Duration::from_secs(3))? {
             is_internet_connected.predicate.store(true, atomic::Ordering::SeqCst);
         } else {
             is_internet_connected.predicate.store(false, atomic::Ordering::SeqCst);

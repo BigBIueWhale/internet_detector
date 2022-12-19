@@ -54,7 +54,7 @@ pub fn run_program() -> Result<(), Box<dyn std::error::Error>> {
             std::thread::sleep(Duration::from_millis(14));
         } else {
             // If there is no internet connectivity, play a custom wav file using the Rodio library
-            let file_path = "./resources/alarm.wav";
+            let file_path = "./alarm.wav";
             let file: std::fs::File = std::fs::File::open(file_path)?;
             let source: rodio::Decoder<BufReader<std::fs::File>> = rodio::Decoder::new(BufReader::new(file))?;
             let source_duration = source.total_duration().ok_or("Could not get duration")?;

@@ -1,2 +1,2 @@
 # internet_detector
-Sounds an alarm immediately when you lose internet connection. Continuously pings 8.8.8.8 with a timeout of 3 seconds.
+Sounds an alarm immediately when you lose internet connection. Continuously pings Google's global DNS server with a timeout of 3 seconds.

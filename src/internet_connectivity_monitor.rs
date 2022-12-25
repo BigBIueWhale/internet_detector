@@ -75,6 +75,13 @@ struct BooleanPredicate
 fn monitor_internet_connectivity(thread_stop: Arc<CancellationToken>, poll_settings: PollSettings, is_internet_connected: Arc<BooleanPredicate>) -> Result<(), Box<dyn std::error::Error>>
 {
     while !thread_stop.is_canceled() {
+        // Avoid busy waiting by waiting for the minimum amount of time that the OS allows.
+        // The busy waiting is not a problem unless the router is responding immediately to the ping
+        // request. In that case, the CPU usage will be 100%.
+        // A common situation in which the router responds immediately is when the router doesn't
+        // support IPv6 and the address we're pinging is IPv6. In that case, the router
+        // responds immediately with an ICMPv6 error.
+        thread::sleep(std::time::Duration::from_millis(14));
         if check_internet_connectivity(poll_settings)? {
             is_internet_connected.predicate.store(true, atomic::Ordering::SeqCst);
         } else {
